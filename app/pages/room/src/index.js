@@ -1,22 +1,14 @@
 import { constants } from "../../_shared/constants.js"
+import Media from "../../_shared/media.js"
+import PeerBuilder from "../../_shared/peerBuilder.js"
 import RoomController from "./controller.js"
+import RoomService from "./service.js"
 import RoomSocketBuilder from "./util/roomSocket.js"
 import View from "./view.js"
-
-const socketBuilder = new RoomSocketBuilder({
-    socketUrl: constants.socketUrl,
-    namespace: constants.socketNamespaces.room
-})
 
 const urlParams = new URLSearchParams(window.location.search)
 const keys = ['id', 'topic']
 const urlData = keys.map((key) => [key, urlParams.get(key)])
-
-
-const room = {
-    id: '0001',
-    topic: 'JS Exper aula 01'
-}
 
 const user = {
     img: 'https://cdn0.iconfinder.com/data/icons/user-pictures/100/matureman1-512.png',
@@ -28,10 +20,25 @@ const roomInfo = {
     user
 }
 
+const peerBuilder = new PeerBuilder({
+    peerConfig: constants.peerConfig
+})
+
+const socketBuilder = new RoomSocketBuilder({
+    socketUrl: constants.socketUrl,
+    namespace: constants.socketNamespaces.room
+})
+
+const roomService = new RoomService({
+    media: Media
+})
+
 const dependencies = {
     view: View,
     socketBuilder,
-    roomInfo
+    roomInfo,
+    roomService,
+    peerBuilder
 }
 
 await RoomController.initialize(dependencies)
