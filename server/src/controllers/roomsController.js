@@ -16,6 +16,80 @@ export default class RoomsController {
         this.#updateGlobalUserData(id)
     }
 
+    disconnect(socket) {
+        console.log('disconnect!!', socket.id)
+        this.#logoutUser(socket)
+    }
+
+    #logoutUser(socket) {
+        const userId = socket.id
+        const user = this.#users.get(userId)
+        const roomId = user.roomId
+
+        // remover user da lista de usuários ativos
+        this.#users.delete(userId)
+        
+        // caso seja um usuário sujeira que estava em uma sala que não existe mais
+        if(!this.rooms.has(roomId)) {
+            return;
+        } 
+
+        const room = this.rooms.get(roomId)
+        const toBeRemoved = [...room.users].find(({ id }) => id === userId)
+        
+        // Usuário removido da sala
+        room.users.delete(toBeRemoved)
+
+        // Se sala estiver vazia, deleta a sala
+        if(!room.users.size) {
+            this.rooms.delete(roomId)
+            return;
+        }
+        
+        // Checar se o usuário desconectado era o dono
+        const disconnectedUserWasOwner = userId === room.owner.id
+        const onlyOneUserLeft = room.users.size === 1
+
+        // Validar se tem apenas um user ou se o user era o dono da sala
+        if(onlyOneUserLeft || disconnectedUserWasOwner) {
+            room.owner = this.#getNewRoomOwner(room, socket)
+        }
+
+        // atualiza a room após a troca
+        this.rooms.set(roomId, room)
+
+        // notifica a rede que o usuário se desconectou
+        console.log(constants.event.USER_DISCONNECTED, " ", user)
+        socket.to(roomId).emit(constants.event.USER_DISCONNECTED, user)
+        console.log("Emitiu")
+    }
+
+    #notifyUserProfileUpgrade(socket, roomId, user) {
+        socket.to(roomId).emit(constants.event.UPGRADE_USER_PERMISSION, user)
+    }
+
+    #getNewRoomOwner(room, socket) {
+        const users = [...room.users.values()]
+        const activeSpeakers = users.find(user => user.isSpeaker)
+
+        // Se quem desconectou era dono, transfere a liderança para o speaker mais velho
+        // ou para o attendee mais velho, caso não exista outros speakers
+        const [newOwner] = activeSpeakers ? [activeSpeakers] : users
+        newOwner.isSpeaker = true
+
+        const outdatedUser = this.#users.get(newOwner.id)
+        const updatedUser = new Attendee({
+            ...outdatedUser,
+            ...newOwner,
+        })
+
+        this.#users.set(newOwner.id, updatedUser)
+
+        this.#notifyUserProfileUpgrade(socket, room.id, newOwner)
+
+        return newOwner
+    }
+
     joinRoom(socket, { user, room }) {
         const userId = user.id = socket.id
         const roomId = room.id

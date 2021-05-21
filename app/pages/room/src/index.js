@@ -1,16 +1,16 @@
 import { constants } from "../../_shared/constants.js"
+import RoomController from "./controller.js"
 import RoomSocketBuilder from "./util/roomSocket.js"
+import View from "./view.js"
 
 const socketBuilder = new RoomSocketBuilder({
     socketUrl: constants.socketUrl,
     namespace: constants.socketNamespaces.room
 })
 
-const socket = socketBuilder
-    .setOnUserConnected((user) => console.log('user connected!', user))
-    .setOnUserDisconnected((user) => console.log('user disconnected!', user))
-    .setOnRoomUpdated((room) => console.log('room list!', room))
-    .build()
+const urlParams = new URLSearchParams(window.location.search)
+const keys = ['id', 'topic']
+const urlData = keys.map((key) => [key, urlParams.get(key)])
 
 
 const room = {
@@ -23,4 +23,16 @@ const user = {
     username: 'Igor Torati' + Date.now()
 }
 
-socket.emit(constants.events.JOIN_ROOM, { user, room })
+const roomInfo = {
+    room: { ...Object.fromEntries(urlData) },
+    user
+}
+
+const dependencies = {
+    view: View,
+    socketBuilder,
+    roomInfo
+}
+
+await RoomController.initialize(dependencies)
+

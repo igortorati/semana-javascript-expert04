@@ -15,7 +15,7 @@ export default class SocketBuilder{
     }
 
     setOnUserDisconnected(fn) {
-        this.onUserDisconnected
+        this.onUserDisconnected = fn
 
         return this
     }
@@ -25,7 +25,7 @@ export default class SocketBuilder{
             withCredentials: false
         })
 
-        socket.on('connection', () => console.log('conectei!'))
+        socket.on('connect', () => console.log('conectei!'))
         socket.on(constants.events.USER_CONNECTED, this.onUserConnected)
         socket.on(constants.events.USER_DISCONNECTED, this.onUserDisconnected)
     
