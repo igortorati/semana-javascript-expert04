@@ -1,11 +1,16 @@
 export const constants = {
-    socketUrl: 'https://sjse-socket-server.herokuapp.com/',
+    socketUrl: 'https://sjse-socket-server.herokuapp.com',
     socketNamespaces: {
         room: 'room',
         lobby: 'lobby'
     },
     peerConfig: Object.values({
         id: undefined,
+        config: {
+            host: 'sjse-peerjs-server.herokuapp.com',
+            secure: true,
+            path: '/'
+        }
     }),
     pages: {
         lobby: '/pages/lobby',

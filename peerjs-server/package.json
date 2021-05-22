@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "set PORT=9000 && npm run start-windows",
-    "start": "npx peerjs --key peerjs --path /",
-    "start-windows": "npx peerjs --key peerjs --path /",
+    "start": "npx peerjs --port $PORT --key peerjs --path /",
+    "start-windows": "npx peerjs --port %PORT% --key peerjs --path /",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
