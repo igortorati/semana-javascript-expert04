@@ -1,5 +1,5 @@
 export const constants = {
-    socketUrl: 'http://localhost:3000',
+    socketUrl: 'https://sjse-socket-server.herokuapp.com/',
     socketNamespaces: {
         room: 'room',
         lobby: 'lobby'
