@@ -20,7 +20,7 @@ Marque esse projeto com uma estrela 🌟
 
 ## Checklist Features
 
-- [ ] O app deve funcionar na Web, Android e IOS
+- [X] O app deve funcionar na Web, Android e IOS
 - Login
   - [X] Deve ter login com GitHub
     - [X] Se houver dados do usuario em localStorage deve ir para lobby direto
