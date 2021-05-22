@@ -2,6 +2,7 @@ const roomGrid = document.getElementById('roomGrid')
 const btnCreateRoomWithTopic = document.getElementById('btnCreateRoomWithTopic')
 const btnCreateRoomWithoutTopic = document.getElementById('btnCreateRoomWithoutTopic')
 const txtTopic = document.getElementById('txtTopic')
+const imgUser = document.getElementById('imgUser')
 
 import Room from "./entities/room.js"
 import getTemplate from "./templates/lobbyItem.js"

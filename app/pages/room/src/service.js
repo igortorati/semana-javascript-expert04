@@ -6,7 +6,7 @@ export default class RoomService {
         this.currentUser = {}
         this.currentPeer = {}
         this.currentStream = {}
-
+        this.isAudioActive = true
         this.peers = new Map()
     }
 
@@ -21,17 +21,56 @@ export default class RoomService {
         this.currentPeer = peer
     }
 
+    
+
     updateCurrentUserProfile(users) {
         this.currentUser = users.find(({ peerId }) => peerId === this.currentPeer.id)
     }
 
-    upgradeUserPermission(user) {
+    async toggleAudioActivation() {
+        this.isAudioActive = !this.isAudioActive
+        this.switchAudioStreamSource({ realAudio: this.isAudioActive })
+    }
+
+    async upgradeUserPermission(user) {
         if(!user.isSpeaker) return;
 
         const isCurrentUser = user.id === this.currentUser.id
         if(!isCurrentUser) return;
 
         this.currentUser = user
+
+        return this._reconnectAsSpeaker()
+    }
+
+    async _reconnectAsSpeaker() {
+        return this.switchAudioStreamSource({ realAudio: true })
+    }
+
+    _reconnectPeers(stream) {
+        for(const peer of this.peers.values()) {
+            const peerId = peer.call.peer
+            peer.call.close()
+            console.log('calling', peerId)
+
+            this.currentPeer.call(peerId, stream)
+        }
+    }
+
+    async switchAudioStreamSource({ realAudio }) {
+        const userAudio = realAudio
+        ? await this.media.getUserAudio()
+        : this.media.createMediaStreamFake()
+
+        this.currentStream = new UserStream({
+            isFake: realAudio,
+            stream: userAudio
+        })
+
+        this.currentUser.isSpeaker = realAudio
+
+        // Encerra as chamadas e as reconecta com a stream verdadeira (não fake)
+        this._reconnectPeers(this.currentStream.stream)
     }
 
     getCurrentUser() {
