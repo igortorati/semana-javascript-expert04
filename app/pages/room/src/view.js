@@ -18,6 +18,11 @@ export default class View {
         imgUser.al = username
     }
 
+    static redirectToLogin() {
+        window.location = constants.pages.login
+    }
+
+
     static updateRoomTopic({ topic }) {
         roomTopic.innerHTML = topic
     }

@@ -22,18 +22,18 @@ Marque esse projeto com uma estrela 🌟
 
 - [ ] O app deve funcionar na Web, Android e IOS
 - Login
-  - [ ] Deve ter login com GitHub
-    - [ ] Se houver dados do usuario em localStorage deve ir para lobby direto
+  - [X] Deve ter login com GitHub
+    - [X] Se houver dados do usuario em localStorage deve ir para lobby direto
 
 - Lobby
-  - [ ] Se não houver dados do usuario em localStorage deve voltar para login
+  - [X] Se não houver dados do usuario em localStorage deve voltar para login
   - [X] Mostra todas as salas ativas
   - [X] Atualiza salas em realtime
   - [X] Pode criar uma sala sem topico
   - [X] Pode criar uma sala com topico
   - [X] Pode acessar salas ativas
 - Room
-  - [ ] Se não houver dados do usuario em localStorage deve voltar para login
+  - [X] Se não houver dados do usuario em localStorage deve voltar para login
   - [X] Cria uma sala com um usuário dono
   - [X] Todos usuários futuros entram com perfil de attendees
   - [X] Notifica Lobby sobre atualizações na sala

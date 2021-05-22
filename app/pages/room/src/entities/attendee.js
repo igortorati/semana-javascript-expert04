@@ -11,7 +11,7 @@ export default class Attendee {
 
         
         const [firstName, lastName] = name.split(/\s/)
-        this.firstName = firstName + id
+        this.firstName = firstName
         this.lastName = lastName
     }
 }

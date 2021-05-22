@@ -4,12 +4,17 @@ const btnCreateRoomWithoutTopic = document.getElementById('btnCreateRoomWithoutT
 const txtTopic = document.getElementById('txtTopic')
 const imgUser = document.getElementById('imgUser')
 
+import { constants } from "../../_shared/constants.js"
 import Room from "./entities/room.js"
 import getTemplate from "./templates/lobbyItem.js"
 
 export default class View {
     static clearRoomList() {
         roomGrid.innerHTML = ''
+    }
+
+    static redirectToLogin() {
+        window.location = constants.pages.login
     }
 
     static generateRoomLink({ id, topic }) {
