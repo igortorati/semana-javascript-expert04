@@ -4,6 +4,8 @@
 
 Este projeto se trata de um clone simples do ClubHouse com a funcionalidade de salas com chamadas de áudio. Ele foi desenvolvido durante a Semana JavaScript Expert #04.
 
+Esse projeto não se trata de uma aplicação robusta completa, sua finalidade é apenas de cunho educativo.
+
 Esta aplicação foi feita utilizando NodeJS, WebSocket e PeerJS.
 
 O login é feito pelo Firebase e permite contas do GitHub.
@@ -18,8 +20,7 @@ Existem três serviços hospedados para que esta aplicação funcione:
 
 O servidor de aplicação pode ser acessado pelo link https://sjse-clubhouse.herokuapp.com/
 
-
-  
+(Esta aplicação foi testada em 3 desktops diferentes utilizando o Chrome (Versão 90.0.4430.212) e um dispositivo móvel com Chrome (Versão 89.0.4389.90)  
 
 ## Features do sistema
   
