@@ -4,7 +4,7 @@
 
 Este projeto se trata de um clone simples do ClubHouse com a funcionalidade de salas com chamadas de áudio. Ele foi desenvolvido durante a Semana JavaScript Expert #04 e não se trata de uma aplicação completa, sua finalidade é apenas de cunho educativo.
 
-Esta aplicação foi feita utilizando NodeJS, WebSocket e PeerJS, com login feito por contas do GitHub através do Firebase e está hospedado no Heroku.
+Esta aplicação foi feita em NodeJs utilizando Socket.IO, WebRTC e PeerJS, com login feito por contas do GitHub através do Firebase e está hospedado no Heroku.
 
 Existem três serviços hospedados para que esta aplicação funcione:
 
